@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>login</title>
+    <style>
+        html{
+            background-color: #D5DBDB;
+        }
+        #mensaje-usuario{
+            margin-block-end: 2px;
+            margin-block-start: 2px;
+            color: red;
+        }
+        #mensaje-contraseña{
+            margin-block-end: 2px;
+            margin-block-start: 2px;
+            color: red;
+        }
+        .hidden-contraseña{
+            display: none;
+        }
+        .hidden-usuario{
+            display: none;
+        }
+    </style>
+    </head>
+    <body>
+        <div>
+            <h3>Login</h3>
+            <!-- Formulario para el login -->
+            <form id="login" action="/login/" method="POST">
+                <p>Ingrese sus datos para poder ingresar a su cuenta.</p>
+                <div>
+                    <label for="usuario">Usuario: </label>
+                    <input type="text" id="usuario" name="usuario">
+                </div>
+                <div>
+                    <label for="contraseña">Contraseña: </label>
+                    <input type="password" id="contraseña" name="contraseña">
+                </div>
+                <div>
+                    <label for="remember_me">Remember me: </label>
+                    <input type="checkbox" id="remember_me" name="remember_me" value="recordarme">
+                </div>
+                <div id="alerta">
+                    <p id="mensaje-contraseña" class="hidden-contraseña">Contraseña incorrecta</p>
+                    <p id="mensaje-usuario" class="hidden-usuario">Usuario incorrecto </p>
+                </div>
+
+                <input type="submit" value="Login">
+            </form>
+        </div>
+        <!--Redireccionamiento hacia la página de registro -->
+        <div>
+            ¿No tienes cuenta? <a href="{{ url_for('registro') }}">Registrate</a> 
+        </div>
+
+        <script>
+            //Se obtienen los inputs del formulario login.
+            const usuarioInput = document.getElementById('usuario');
+            const contraseñaInput = document.getElementById('contraseña');
+            const remember_meInput=document.getElementById('remember_me');
+            document.getElementById('login').onsubmit = function(e){
+                            e.preventDefault();
+                            const usuario = usuarioInput.value;
+                            const contraseña = contraseñaInput.value;
+                            const remember_me = remember_meInput.value;
+                            fetch('/login/',{
+                                            method: 'POST',
+                                            body:JSON.stringify({
+                                                            "usuario":usuario,
+                                                            "contraseña":contraseña,
+                                                            'remember_me':remember_me
+                                                        }),
+                                            headers:{
+                                                            'Content-Type':'application/json'
+                                                        }
+                                        }).then(response => {
+                                                        console.log('response: ', response )
+                                                        //Se verifica si el servidor devolvió algún redireccionamiento
+                                                        if (response.redirected){
+                                                                        //Se redirecciona a la url que indicó el servidor
+                                                                        window.location.href = response.url;
+                                                                    } else{
+                                                                                    //En caso no haya redireccionamiento se devuelve la respuesta en json.
+                                                                                    return response.json();
+                                                                                }
+                                                    }).then(jsonResponse => {
+                                                                    console.log('respuesta: ', jsonResponse);
+                                                                    //Se blanquean las casillas del login
+                                                                    document.getElementById('usuario').value="";
+                                                                    document.getElementById('contraseña').value="";
+                                                                    const $checkbox  =document.querySelector('#remember_me')
+                                                                    $checkbox.checked = false;
+                                                                    //Se verifica cual fue el error y se muestra el correspondiente en el html
+                                                                    if (jsonResponse['error']==='contraseña_incorrecta') {
+                                                                                    document.getElementById('mensaje-contraseña').className='';
+                                                                                    document.getElementById('mensaje-usuario').className='hidden-usuario';
+                                                                                } else{
+                                                                                                document.getElementById('mensaje-usuario').className='';
+                                                                                                document.getElementById('mensaje-contraseña').className='hidden-contraseña';
+                                                                                            };
+                                                                });
+                        }
+        </script>
+    </body>
+</html>

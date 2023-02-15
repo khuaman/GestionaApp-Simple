@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <title>login</title>
+
+<style>
+html{
+    background-color: #D5DBDB;
+}
+    .registro-box{
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        margin-top: 0em;
+        margin-block-end: 3em;
+        width: 600px;
+    }
+    h3{
+        margin-top: 0em;
+    }
+    #registro{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-content: center;
+        margin-block-end: 0em;
+    }
+    .casillas{
+        display: flex;
+        flex-direction: column;
+        border: 1px dotted black;
+        padding-top: 1em;
+        padding-block-end: 1em;
+        margin: 3px;
+    }
+    #mensaje{
+        color: red;
+        margin-block-end: 2px;
+        margin-block-start: 2px;
+    }
+    .hidden{
+        display: none;
+    }
+</style>
+    </head>
+    <body>
+        <div>
+            <h1>
+                <center>¡Bienevenido a Gestoría de Almacenes!</center>
+            </h1>
+        </div>
+        <div class="registro-box"> 
+            <h3>Proceda a registrarse:</h3>
+            <form action="/registro" id="registro" method="GET">
+                <div class="casillas">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                </div>
+                <div class="casillas">
+                    <label for="apellido">Apellido: </label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Apellido">
+                </div>
+                <div class="casillas">
+                    <label for="usuario">Usuario: </label>
+                    <input type="text" id="usuario" name="usuario" placeholder="Usuario">
+                </div>
+                <div class="casillas">
+                    <label for="contraseña">Contraseña: </label>
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña">
+                </div>
+                <div class="casillas">
+                    <label for="edad">Edad: </label>
+                    <input type="number" id="edad" name="edad" placeholder="edad">
+                </div>
+                <div class="casillas">
+                    <label for="sexo">Sexo: </label>
+                    <input type="text" id="sexo", name="sexo" placeholder="masculino/femenino">
+                </div>
+                <div class="casillas">
+                    <label for="almacen">Nombre de tu almacen: </label>
+                    <input type="text" id="nombre_almacen", name="almacen" placeholder="Nombre del almacen">
+                </div>
+                <div id="alerta">
+                    <p id="mensaje" class="hidden">Faltan casillas por completar </p>
+                </div>
+                <div>
+                    <input type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+        <script>
+            //Se obtienen los inputs del formulario registro
+            const nombreInput = document.getElementById("nombre");
+            const apellidoInput = document.getElementById("apellido");
+            const edadInput = document.getElementById("edad");
+            const sexoInput = document.getElementById("sexo");
+            const usuarioInput = document.getElementById("usuario");
+            const contraseñaInput = document.getElementById("contraseña");
+            const nombreAlmacenInput = document.getElementById("nombre_almacen");
+            document.getElementById("registro").onsubmit = function(e){
+                            e.preventDefault();
+                            //Se obtienen los valores de los inputs
+                            const nombre = nombreInput.value;
+                            const apellido = apellidoInput.value;
+                            const edad = edadInput.value;
+                            const sexo = sexoInput.value;
+                            const usuario = usuarioInput.value;
+                            const contraseña = contraseñaInput.value;
+                            const nombreAlmacen = nombreAlmacenInput.value;
+                            //Se hace uso de fetch
+                            fetch ('/registro', {
+                                            method: 'POST',
+                                            body: JSON.stringify({
+                                                            'nombre': nombre,
+                                                            'apellido': apellido,
+                                                            'edad': edad,
+                                                            'sexo': sexo,
+                                                            'usuario': usuario,
+                                                            'contraseña': contraseña,
+                                                            'nombre_almacen':nombreAlmacen
+                                                        }),
+                                            headers: {
+                                                            'Content-Type': 'application/json'
+                                                        }
+                                        }).then(response => {
+                                                        console.log("response: ", response)
+                                                        //con la respuesta del servidor se verifica si se solicita una redirección
+                                                        if (response.redirected){
+                                                                        //se redireciona a la url mandada por el servidor
+                                                                        window.location.href = response.url;
+                                                                    } else{
+                                                                                    return response.json()
+                                                                                }
+                                                    // en caso no haber una redirección, se obtiene la promesa y se pasa la respuesta json del servidor
+                                                    }).then(responseJson => {
+                                                                    console.log('responseJson: ', responseJson)
+                                                                    //Se blanquean las casillas del formulario y se muestra el error
+                                                                    for(let i=0; i<responseJson.length;i++){
+                                                                                    val =responseJson['casilla'+String(i)];
+                                                                                    document.getElementById(val).value = '';
+                                                                                };
+                                                                    document.getElementById('mensaje').className='';
+                                                                });
+                        };
+        </script>
+    </body>
+</html>

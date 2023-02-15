@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+    --primary-color: white;
+    --secondary-color: rgb(61,68,73);
+    --highlitght-color: #3282b8;
+
+    --available: greenyellow;
+    --away: lightsalmon;
+    --ofline: lightgray;
+    
+    --paddin:12px;
+    --padding-s:6px;
+    --paddin-xd:2px;
+
+    --border: 3px;
+
+    --background-container:#2a3338;
+    --border-color:var(--secondary-color);
+    --bg-color:var(--highlitght-color);
+    --text-color:var(--primary-color);
+    --bg-active-button:var(--highlitght-color);
+    --text-color-button: var(--primary-color);
+    --text-color-active-button: var(--primary-color);
+    --hober-cell-color:var(--highlitght-color);
+    --even-row-color:var(--secondary-color);
+    --focus-color:var(--highlitght-color);
+    --input-background-color:var(--secondary-color);
+    --input-color:var(--primary-color);
+}
+
+body{
+    position: relative;
+    
+    width: 100%;
+    min-width: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: url(../img/bg.jpeg) no-repeat ;
+    background-size: cover;
+    background-position: center;
+}
+
+.material-icons{
+    font-size: 16px;
+}
+
+.datatable-container{
+    font-family:'Noto Sans',sans-serif;
+    background-color: var(--background-container);
+    border-radius: var(--border-color);
+    color:var(--text-color);
+    width:600px;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.datatable-container .header-tools{
+    border-bottom: solid 1px var(--border-color);
+    padding: var(--paddin);
+    display: flex;
+    align-items: baseline;
+}
+
+.datatable-container .header-tools .search{
+    width: 30%;
+}
+
+.datatable-container .header-tools .search-input{
+    width: 30%;
+    background-color: var(--input-background-color);
+    display: block;
+    box-sizing:border-box;
+    border-radius: var(--border);
+    border: solid 1px var(--border-color);
+    color: var(--input-color)
+}
+
+
+.datatable-container .header-tools .tools{
+    width: 30%;
+}
+
+.datatable-container .header-tools .tools ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+}
+
+.datatable-container .header-tools .tools ul li{
+    display: inline-block;
+    margin: 0 var(--paddin-xd);
+    align-items:baseline;
+}
+
+.datatable-container .footer-tools{
+    padding: var(--paddin);
+    display:flex;
+    align-items: baseline;
+}
+
+.datatable-container .footer-tools .list-items{
+ width: 50%;
+}
+
+.datatable-container .footer-tools .pages{
+    margin-left: auto;
+    margin-right: 0;
+    width: 50%;
+
+}
+
+.datatable-container .footer-tools .pages ul{
+    margin:0;
+    padding:0;
+    display:flex;
+    align-items: baseline;
+    justify-content: flex-end;
+}
+
+.datatable-container .footer-tools .pages ul li{
+    display: inline-block;
+    margin: 0 var(--paddin-xd);
+
+}
+
+.datatable-container .footer-tools .pages ul li button,
+.datatable-container .header-tools .pages ul li button{
+    color: var(--text-color-button);
+    width: 100%;
+    box-sizing: border-box;
+    border:0;
+    border-radius: var(--border);
+    background: transparent;
+    cursor:pointer;
+
+}
+
+
+.datatable-container .footer-tools .pages ul li button:hover,
+.datatable-container .header-tools .pages ul li button:hover{
+    background: var(--bg-active-button);
+    color: var(--text-color-active-button);
+
+}
+
+.datatable-container .footer-tools .pages ul li span.active{
+    background-color: var(--bg-color);
+    border-radius: var(--border);
+
+}
+
+.datatable-container .footer-tools .pages ul li button,
+.datatable-container .footer-tools .pages ul li span,
+.datatable-container .header-tools .pages ul li button{
+    padding: var(--padding-s) var(--paddin);
+
+}
+
+.datatable-container .datable{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.datatable-container .datatable,
+.datatable-container .datatable th,
+.datatable-container .datatable td{
+    padding: var(--paddin) var(--paddin);
+}
+
+.datatable-container .datatable th{
+    font-weight: bolder;
+    text-align: left;
+    border-bottom: solid 1px var(--border-color);
+
+}
+
+.datatable-container .datatable td{
+    border-bottom: solid 1px var(--border-color);
+
+}
+
+.datatable-container .datatable tbody tr:nth-child(even){
+    background-color: var(--even-row-color);
+}
+
+.datatable-container .datatable tbody tr:hover{
+    background-color: var(--hober-cell-color);
+}
+   
+.datatable-container .datatable tbody tr .available::after,
+.datatable-container .datatable tbody tr .away::after,
+.datatable-container .datatable tbody tr .offline::after{
+    display:inline-block;
+    vertical-align: middle;
+}
+
+
+.datatable-container .datatable tbody tr .available::after{
+    content: 'En Uso';
+    color: var(--available)
+}
+
+.datatable-container .datatable tbody tr .away::after{
+    content: 'Sin Usar';
+    color: var(--away)
+}
+
+.datatable-container .datatable tbody tr .offline::after{
+    content: 'Lleno';
+    color: var(--ofline)
+}
+
+.datatable-container .datatable tbody tr .available::before,
+.datatable-container .datatable tbody tr .away::before,
+.datatable-container .datatable tbody tr .offline::before{
+    content:'';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+
+.datatable-container .datatable tbody tr .available::before{
+    background-color: var(--available);
+}
+
+.datatable-container .datatable tbody tr .away::before{
+    background-color: var(--away);
+}
+
+.datatable-container .datatable tbody tr .offline::before{
+    background-color: var(--ofline);
+}
+   
+   
+
+
+.login-box {
+    width: 320px;
+    font-family: 'Noto Sans',sans-serif;
+    height: 385px;
+    background: var(--background-container);
+    color: #fff;
+    top:170%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 50px 30px;
+}
+
+.login-box h1 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+  
+.login-box label {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    display: block;
+}
+  
+.login-box input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+  
+.login-box input[type="text"], .login-box input[type="descripccion"] {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+  
+.login-box input[type="submit"] {
+    border: none;
+    outline: none; /*le quitas la línea asquerosa que había debajo*/
+    height: 40px;
+    background: #ffc107;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px; /*hago que tenga una especie de óvalo*/
+}
+  
+.login-box input[type="submit"]:hover {
+    cursor: pointer;
+    background: #ffc107;
+    color: #000;
+}
+  
+.login-box a {
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: darkgrey;
+}
+  
+.login-box a:hover {
+    color: #fff;
+}
+
+
+

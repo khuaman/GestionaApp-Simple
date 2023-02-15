@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-sacalable=no, minimun-scale=1.0,maximun-scale=1.0">
+        <title>Página de prueba</title>
+
+<style>
+html{
+    background-color: #D5DBDB;
+}
+    h3{
+        margin-top: 0em;
+    }
+    #tabla{
+        width: 500px;
+        border: 1px solid black;
+    }
+    td, th{
+        border-spacing: 1px;
+        border: 1px solid black;
+    }
+    .login-registro{
+        display: flex;
+        flex-direction: row-reverse;
+    }
+</style>
+
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/estilos.css">
+        <script type="text/javascript" src="/js/prefixfree.min.js"></script>
+    </head>
+
+    
+    <style>
+            
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Open Sans', sans-serif ;
+    
+}
+
+.contenedor{
+    width: 100%;
+    max-width: 1170px;
+   
+    margin:auto;
+}
+
+
+header{
+    width: 100%;
+    height: 200 px; 
+    background-color: #82b199;
+}
+
+.logo{
+    padding: 25px 0;
+}
+
+.logo img{
+    width: 100px;
+    display: block;
+    margin:auto;
+}
+
+.banner{
+    width:100%;
+    height: 500px;
+    background-image: url('https://fundacionadecco.org/blog/wp-content/uploads/2018/06/almacén-picker.jpeg');
+    background-position: center;
+    background-size: cover;
+}
+
+.banner > div{
+    width: 100%;
+    height: 100%;
+}
+
+.menu{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+    max-width: 430px;
+    margin:auto;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#ffffff;
+    font-size: 14px;
+    padding-bottom: 40px;
+}
+
+.menu a:hover{
+    color:#00A3CA;
+}
+
+</style>
+     
+    <body>
+
+        <div>
+            <h1><center>Gestor de almacenes</center></h1>
+        </div>
+        <!--Encabezado-->
+        <header>
+            <div class="contenedor">
+                <div class="logo">
+                    <img src="https://www.zarla.com/images/zarla-top-almacn-1x1-2400x2400-20220204-3trcd49rtthr4h76d9rp.png?crop=1:1,smart&width=250&dpr=2" alt="logo">
+                </div>
+                <nav class="menu">
+                    <a href="#">Inicio</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Nosotros</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contacto</a>
+                    <a href="{{ url_for('registro')}}">Regístrate</a>
+                    <a href="{{ url_for('login')}}">Login</a>
+                </nav>
+            </div>
+        </header>
+        <!--BannerPrincipal-->
+        <section class="banner">
+            <div>
+                <div class="contenedor llamada-accion">
+                    <p>Tu almacen de confianza</p>
+                    <h2>NOMBRE DEL PROYECTO</h2>
+                    <a href="#">WHATSAPP</a>
+                </div>
+            </div>
+        </section>
+        <section class="contenedor">
+            <div>
+                <h1>Gestor de almacenes</h1>
+            </div>
+            <div class="login">
+                <form  action="/login/" id="botón">
+                    <input type="submit" id="login" value="Login">
+                </form>
+            </div>
+        </section>
+        <section class="contenedor">
+
+        <h3>Usuarios registrados:</h3>
+            <div class="contenedor">
+                <table id="tabla">
+                    <thead>
+                        <tr>
+                            <th class="columna1">Nombre</th>
+                            <th>Apellido</th>
+                            <th>Edad</th>
+                            <th>Sexo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-elementos">
+                        {% for usuario in usuarios %}
+                        <tr id="filas">
+                            <td class="columna1">{{usuario.nombre}}</td>
+                            <td class="columna2">{{usuario.apellido}}</td>
+                            <td class="columna3">{{usuario.edad}}</td>
+                            <td class="columna4">{{usuario.sexo}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <script>
+            /*const loginButton=document.getElementById('login');
+            document.getElementById('botón').onclick = function(e){
+                            e.preventDefault();
+                            const login = loginButton.value;
+                            fetch('/', {
+                                            method: 'POST',
+                                            body:JSON.stringify({
+                                                            'login':login
+                                                        }),
+                                            headers:{
+                                                            'Content-Type':'application/json'
+                                                        }
+                                        }).then(response => {
+                                                        return response.json();
+                                                    });
+                        }
+                */        
+        </script>
+    </body>
+</html>
+								
